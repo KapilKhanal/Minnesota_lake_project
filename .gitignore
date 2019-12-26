@@ -86,7 +86,7 @@ celerybeat-schedule
 .env
 .lake
 env/
-lake/
+lake
 ENV/
 env.bak/
 lake.bak/
