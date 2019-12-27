@@ -1,7 +1,9 @@
-import math
-
+import math,os,sys
+sys.path.append((os.path.dirname(os.path.dirname(__file__))))
+print(sys.path)
 from lakeModel.predict import make_prediction
-from lakeModel.processing.data_management import load_dataset
+
+from processing.data_management import load_dataset
 
 
 def test_make_single_prediction():

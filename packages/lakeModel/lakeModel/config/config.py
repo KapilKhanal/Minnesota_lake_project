@@ -1,6 +1,6 @@
 import os
 import pathlib
-
+import lakeModel
 
 import pandas as pd
 
@@ -9,7 +9,8 @@ pd.options.display.max_rows = 10
 pd.options.display.max_columns = 10
 
 
-PACKAGE_ROOT = pathlib.Path(__file__).resolve().parent.parent
+PACKAGE_ROOT = pathlib.Path(lakeModel.__file__).resolve().parent
+print(f"package root is {PACKAGE_ROOT}")
 TRAINED_MODEL_DIR = PACKAGE_ROOT / 'trained_models'
 DATASET_DIR = PACKAGE_ROOT / 'datasets'
 

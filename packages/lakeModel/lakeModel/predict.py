@@ -1,10 +1,13 @@
 import numpy as np
 import pandas as pd
+import sys
+import os
 
-from processing.data_management import load_pipeline
-from config import config
-from processing.validation import validate_inputs
-import __version__ as _version
+sys.path.append((os.path.dirname(os.path.dirname(__file__))))
+from lakeModel.processing.data_management import load_pipeline
+from lakeModel.config import config
+from lakeModel.processing.validation import validate_inputs
+from lakeModel import __version__ as _version
 
 import logging
 
@@ -12,6 +15,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 pipeline_file_name = f'{config.PIPELINE_SAVE_FILE}{_version}.pkl'
+print(f" pipeline save file = {pipeline_file_name}")
 _price_pipe = load_pipeline(file_name=pipeline_file_name)
 
 
@@ -21,7 +25,7 @@ def make_prediction(*, input_data) -> dict:
     data = pd.DataFrame(input_data)
     validated_data = validate_inputs(input_data=data)
     prediction = _price_pipe.predict(validated_data[config.FEATURES])
-    output = np.exp(prediction)
+    output = prediction
 
     results = {'predictions': output, 'version': _version}
 

@@ -39,6 +39,7 @@ def load_pipeline(*, file_name: str
     """Load a persisted pipeline."""
 
     file_path = config.TRAINED_MODEL_DIR / file_name
+    print(f"loading file path== {file_path}")
     trained_model = joblib.load(filename=file_path)
     return trained_model
 
@@ -53,5 +54,5 @@ def remove_old_pipelines(*, files_to_keep) -> None:
 
     for model_file in config.TRAINED_MODEL_DIR.iterdir():
         if model_file.name not in [files_to_keep, '__init__.py']:
-            model_file.unlink()
-            print(f"printing model file{model_file}")
+            del model_file
+            
