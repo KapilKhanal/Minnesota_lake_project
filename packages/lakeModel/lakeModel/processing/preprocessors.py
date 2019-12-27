@@ -5,6 +5,13 @@ from sklearn.base import BaseEstimator, TransformerMixin
 #from lakeModel.processing.errors import InvalidModelInputError
 
 
+import numpy as np
+import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
+
+#from lakeModel.processing.errors import InvalidModelInputError
+
+
 class CategoricalImputer(BaseEstimator, TransformerMixin):
     """Categorical data missing value imputer."""
 
@@ -15,7 +22,7 @@ class CategoricalImputer(BaseEstimator, TransformerMixin):
             self.variables = variables
 
     def fit(self, X: pd.DataFrame, y: pd.Series = None
-            ) -> 'CategoricalImputer':
+            ):
         """Fit statement to accomodate the sklearn pipeline."""
 
         return self
@@ -28,7 +35,6 @@ class CategoricalImputer(BaseEstimator, TransformerMixin):
             X[feature] = X[feature].fillna('Missing')
 
         return X
-
 
 class NumericalImputer(BaseEstimator, TransformerMixin):
     """Numerical missing value imputer."""
@@ -47,66 +53,14 @@ class NumericalImputer(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
+        #print(type(X))
         X = X.copy()
         for feature in self.variables:
             X[feature].fillna(self.imputer_dict_[feature], inplace=True)
         return X
-
-
-class TemporalVariableEstimator(BaseEstimator, TransformerMixin):
-    """Temporal variable calculator."""
-
-    def __init__(self, variables=None, reference_variable=None):
-        if not isinstance(variables, list):
-            self.variables = [variables]
-        else:
-            self.variables = variables
-
-        self.reference_variables = reference_variable
-
-    def fit(self, X, y=None):
-        # we need this step to fit the sklearn pipeline
-        return self
-
-    def transform(self, X):
-        X = X.copy()
-        for feature in self.variables:
-            X[feature] = X[self.reference_variables] - X[feature]
-
-        return X
-
-
-class RareLabelCategoricalEncoder(BaseEstimator, TransformerMixin):
-    """Rare label categorical encoder"""
-
-    def __init__(self, tol=0.05, variables=None):
-        self.tol = tol
-        if not isinstance(variables, list):
-            self.variables = [variables]
-        else:
-            self.variables = variables
-
-    def fit(self, X, y=None):
-        # persist frequent labels in dictionary
-        self.encoder_dict_ = {}
-
-        for var in self.variables:
-            # the encoder will learn the most frequent categories
-            t = pd.Series(X[var].value_counts() / np.float(len(X)))
-            # frequent labels:
-            self.encoder_dict_[var] = list(t[t >= self.tol].index)
-
-        return self
-
-    def transform(self, X):
-        X = X.copy()
-        for feature in self.variables:
-            X[feature] = np.where(X[feature].isin(
-                self.encoder_dict_[feature]), X[feature], 'Rare')
-
-        return X
-
-
+    
+    
+    
 class CategoricalEncoder(BaseEstimator, TransformerMixin):
     """String to numbers categorical encoder."""
 
@@ -148,6 +102,38 @@ class CategoricalEncoder(BaseEstimator, TransformerMixin):
         return X
 
 
+class RareLabelCategoricalEncoder(BaseEstimator, TransformerMixin):
+    """Rare label categorical encoder"""
+
+    def __init__(self, tol=0.05, variables=None):
+        self.tol = tol
+        if not isinstance(variables, list):
+            self.variables = [variables]
+        else:
+            self.variables = variables
+
+    def fit(self, X, y=None):
+        # persist frequent labels in dictionary
+        self.encoder_dict_ = {}
+
+        for var in self.variables:
+            # the encoder will learn the most frequent categories
+            t = pd.Series(X[var].value_counts() / np.float(len(X)))
+            # frequent labels:
+            self.encoder_dict_[var] = list(t[t >= self.tol].index)
+
+        return self
+
+    def transform(self, X):
+        X = X.copy()
+        for feature in self.variables:
+            X[feature] = np.where(X[feature].isin(
+                self.encoder_dict_[feature]), X[feature], 'Rare')
+
+        return X
+    
+
+         
 class DropUnecessaryFeatures(BaseEstimator, TransformerMixin):
 
     def __init__(self, variables_to_drop=None):
@@ -162,3 +148,10 @@ class DropUnecessaryFeatures(BaseEstimator, TransformerMixin):
         X = X.drop(self.variables, axis=1)
 
         return X
+
+            
+            
+    
+
+
+

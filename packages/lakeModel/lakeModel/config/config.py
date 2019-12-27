@@ -33,16 +33,18 @@ FEATURES = ['Year', 'Mean(log_phosphorus)',
        'Median(FIN_SQ_FT)', 'Interquartile Range(FIN_SQ_FT)',
        'N(Green ACRE - Yes)', 'N(Homestead - Partial)', 'N(Homestead - Yes)',
        'N(Single Unit)', 'N(Multiple Unit)',
-       'Median(TOTAL_TAX)','Median(SALE_VALUE)','Interquartile Range(SALE_VALUE)',
+       'Median(TOTAL_TAX)','Interquartile Range(SALE_VALUE)',
        'Interquartile Range(TOTAL_TAX)', 'N(Sales that year)',
        'N(Built that year)'
             ]
 
 # this variable is to calculate the temporal variable,
 # can be dropped afterwards
-DROP_FEATURES = 'Year'
+DROP_FEATURES = ['seasonal.grade']
 
 # numerical variables with NA in train set
+CATEGORICAL_VARS_WITH_NA= ["MAJOR_WATERSHED"]
+
 NUMERICAL_VARS_WITH_NA = ['Mean(log_phosphorus)',
  'Std Dev(log_phosphorus)',
  'Mean(Secchi_Depth_RESULT)',
@@ -51,15 +53,15 @@ NUMERICAL_VARS_WITH_NA = ['Mean(log_phosphorus)',
  'physical.avg',
  'Mean(ACRES_POLY)',
  'Std Dev(ACRES_POLY)',
- 'Median(SALE_VALUE)',
  'Interquartile Range(SALE_VALUE)',
  'Median(TOTAL_TAX)',
  'Interquartile Range(TOTAL_TAX)'
-
 ]
+CATEGORICAL_VARS = ["MAJOR_WATERSHED"]
+
 
 # categorical variables with NA in train set
-CATEGORICAL_VARS_WITH_NA = []
+
 
 TEMPORAL_VARS = None
 
@@ -67,7 +69,6 @@ TEMPORAL_VARS = None
 NUMERICALS_LOG_VARS = []
 
 # categorical variables to encode
-CATEGORICAL_VARS = ["MAJOR_WATERSHED","seasonal.grade"]
 
 NUMERICAL_NA_NOT_ALLOWED = [
     feature for feature in FEATURES

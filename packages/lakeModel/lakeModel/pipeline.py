@@ -1,4 +1,4 @@
-from sklearn.linear_model import Lasso
+from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
@@ -9,7 +9,7 @@ import sys
 import os
 
 sys.path.append((os.path.dirname(os.path.dirname(__file__))))
-print(sys.path)
+#print(sys.path)
 from config import config 
 import logging
 
@@ -32,8 +32,8 @@ price_pipe = Pipeline(
         ('log_transformer',
             features.LogTransformer(variables=config.NUMERICALS_LOG_VARS)),
         ('drop_features',
-            pp.DropUnecessaryFeatures(variables_to_drop=config.DROP_FEATURES)),
-        ('scaler', MinMaxScaler()),
-        ('Linear_model', Lasso(alpha=0.005, random_state=0))
+            pp.DropUnecessaryFeatures(variables_to_drop=config.DROP_FEATURES)), 
+        
+        ('Linear_model', LinearRegression())
     ]
 )

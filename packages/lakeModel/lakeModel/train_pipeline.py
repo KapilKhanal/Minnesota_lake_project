@@ -18,7 +18,7 @@ def run_training() -> None:
 
     # read training data
     data = load_dataset(file_name=config.TRAINING_DATA_FILE)
-
+    data = data.dropna(subset = [config.TARGET])
     # divide train and test
     X_train, X_test, y_train, y_test = train_test_split(
         data[config.FEATURES],
@@ -29,12 +29,14 @@ def run_training() -> None:
     # transform the target
     y_train = y_train
     y_test = y_test
-
+    #print(y_train.isnull().sum())
     pipeline.price_pipe.fit(X_train[config.FEATURES],
                             y_train)
 
     _logger.info(f'saving model version: {_version}')
     save_pipeline(pipeline_to_persist=pipeline.price_pipe)
+    logging.info(f'pipeline pickled{pipeline.price_pipe}')
+    print("pipeline saved")
 
 
 if __name__ == '__main__':
