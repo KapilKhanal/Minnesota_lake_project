@@ -25,7 +25,6 @@ jobs:
           command: |
             . lake/bin/activate
             pip install -r packages/lakeModel/requirements.txt
-      - *fetch_data
       - run:
           name: Train model
           command: |
