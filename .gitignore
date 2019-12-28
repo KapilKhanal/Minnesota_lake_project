@@ -108,6 +108,4 @@ venv.bak/
 .idea/
 
 # datafiles
-train.csv
-test.csv
 .DS_Store
