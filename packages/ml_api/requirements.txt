@@ -5,4 +5,4 @@ flask==1.0.2
 marshmallow==2.17.0
 
 # Install from gemfury or pypi 
-lakeModel ==0.1.0
+lakeModel == 1.0.0
