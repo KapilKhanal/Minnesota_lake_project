@@ -18,7 +18,7 @@ def run_training() -> None:
 
     # read training data
     data = load_dataset(file_name=config.TRAINING_DATA_FILE)
-    print(data.columns)
+    #print(data.columns)
     data = data.dropna(subset = [config.TARGET])
     # divide train and test
     X_train, X_test, y_train, y_test = train_test_split(

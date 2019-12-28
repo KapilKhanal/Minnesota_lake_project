@@ -4,8 +4,9 @@ import pathlib
 import os
 import sys
 
+print("ML API CONFIG")
 PACKAGE_ROOT = pathlib.Path(__file__).resolve().parent.parent
-
+print(PACKAGE_ROOT)
 FORMATTER = logging.Formatter(
     "%(asctime)s — %(name)s — %(levelname)s —"
     "%(funcName)s:%(lineno)d — %(message)s")

@@ -6,7 +6,7 @@ import json
 import math
 import sys,os
 sys.path.append((os.path.dirname(os.path.dirname(__file__))))
-print(sys.path)
+#print(sys.path)
 from api import __version__ as api_version
 
 

@@ -21,6 +21,9 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     _data = _data.rename(columns = config.Feature_FIELD_MAP)
     return _data
 
+def load_prediction_dataset(*, file_name: str)->pd.DataFrame:
+    _df = pd.read_csv(f'{config.DATASET_DIR}/{file_name}')
+    return _df
 
 def save_pipeline(*, pipeline_to_persist) -> None:
     """Persist the pipeline.
@@ -50,7 +53,7 @@ def load_pipeline(*, file_name: str
     """Load a persisted pipeline."""
 
     file_path = config.TRAINED_MODEL_DIR / file_name
-    print(f"loading file path== {file_path}")
+    #print(f"loading file path== {file_path}")
     with open(file_path, 'rb') as fo:  
        trained_model = joblib.load(fo)
     return trained_model

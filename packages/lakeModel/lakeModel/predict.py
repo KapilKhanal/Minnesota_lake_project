@@ -15,7 +15,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 pipeline_file_name = f'{config.PIPELINE_SAVE_FILE}{_version}.joblib'
-print(f" pipeline save file = {pipeline_file_name}")
+#print(f" pipeline save file = {pipeline_file_name}")
 _price_pipe = load_pipeline(file_name=pipeline_file_name)
 
 
@@ -25,7 +25,7 @@ def make_prediction(*, input_data) -> dict:
     data = pd.DataFrame(input_data)
    
     validated_data = validate_inputs(input_data=data)
-    print(f"COLUMNS AFTER VALIDATION  = {validated_data.columns}")
+    #print(f"COLUMNS AFTER VALIDATION  = {validated_data.columns}")
     prediction = _price_pipe.predict(validated_data[config.FEATURES])
     output = prediction
 
