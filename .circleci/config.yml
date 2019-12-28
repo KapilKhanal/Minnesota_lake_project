@@ -1,19 +1,18 @@
 version: 2
-jobs:
-  test_regression_model:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.2
-    steps:
-      - checkout
-      - run:
-          name: Runnning tests
-          command: |
-            virtualenv lake
-            . lake/bin/activate
-            pip install --upgrade pip
-            pip install -r packages/lakeModel/requirements.txt
-            py.test -vv packages/lakeModel/tests
+
+defaults: &defaults
+  docker:
+    - image: circleci/python:3.7.2
+  working_directory: ~/project
+
+prepare_venv: &prepare_venv
+  run:
+    name: Create lake
+    command: |
+      python3 -m lake lake
+      source lake/bin/activate
+      pip install --upgrade pip
+
 
 
 test_ml_api:
