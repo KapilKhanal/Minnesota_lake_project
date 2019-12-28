@@ -1,0 +1,9 @@
+# api
+flask==1.0.2
+
+# schema validation
+marshmallow==2.17.0
+
+# local regression_model package
+# update with your local path
+-e "Users/qe5106hi/desktop/Lake_model_API/deploying_lake_model/packages/lakeModel"

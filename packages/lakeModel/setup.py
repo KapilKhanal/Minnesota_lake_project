@@ -15,8 +15,11 @@ URL = 'your github project'
 EMAIL = 'kkhanal16@winona.edu'
 AUTHOR = 'Kapil Khanal'
 REQUIRES_PYTHON = '>=3.6.0'
+import sys
+import os
 
-
+sys.path.append((os.path.dirname(os.path.dirname(__file__))))
+print(sys.path)
 # What packages are required for this module to be executed?
 def list_reqs(fname='requirements.txt'):
     with open(fname) as fd:
@@ -61,7 +64,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=('tests',)),
-    package_data={'regression_model': ['VERSION']},
+    package_data={'lakeModel': ['VERSION']},
     install_requires=list_reqs(),
     extras_require={},
     include_package_data=True,

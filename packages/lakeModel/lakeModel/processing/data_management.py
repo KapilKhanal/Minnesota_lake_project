@@ -1,5 +1,10 @@
 import pandas as pd
-from sklearn.externals import joblib
+import joblib
+import sys
+import os
+
+sys.path.append((os.path.dirname(os.path.dirname(__file__))))
+
 from sklearn.pipeline import Pipeline
 
 from lakeModel.config import config
@@ -12,7 +17,8 @@ _logger = logging.getLogger(__name__)
 
 #Loading the dataset using pandas from the location of train data
 def load_dataset(*, file_name: str) -> pd.DataFrame:
-    _data = pd.read_csv(f'{config.DATASET_DIR}/{file_name}')
+    _data = pd.read_csv(f'{config.DATASET_DIR}/{file_name}',usecols = config.COLUMNS_NECESSARY_READ)
+    _data = _data.rename(columns = config.Feature_FIELD_MAP)
     return _data
 
 
@@ -26,11 +32,16 @@ def save_pipeline(*, pipeline_to_persist) -> None:
     """
 
     # Prepare versioned save file name from config
-    save_file_name = f'{config.PIPELINE_SAVE_FILE}{_version}.pkl'
+    save_file_name = f'{config.PIPELINE_SAVE_FILE}{_version}.joblib'
+    
     save_path = config.TRAINED_MODEL_DIR / save_file_name
 
     remove_old_pipelines(files_to_keep=save_file_name)
-    joblib.dump(pipeline_to_persist, save_path)
+    with open(save_path, 'wb') as fo: 
+        joblib.dump(pipeline_to_persist, fo) 
+       
+    #joblib.dump(pipeline_to_persist, save_path)
+    print(f"MODEL FILE SAVED AT{save_path}")
     _logger.info(f'saved pipeline: {save_file_name}')
 
 
@@ -40,7 +51,8 @@ def load_pipeline(*, file_name: str
 
     file_path = config.TRAINED_MODEL_DIR / file_name
     print(f"loading file path== {file_path}")
-    trained_model = joblib.load(filename=file_path)
+    with open(file_path, 'rb') as fo:  
+       trained_model = joblib.load(fo)
     return trained_model
 
 

@@ -17,47 +17,75 @@ DATASET_DIR = PACKAGE_ROOT / 'datasets'
 # data
 TESTING_DATA_FILE = 'test.csv'
 TRAINING_DATA_FILE = 'train.csv'
-TARGET = 'Median(SALE_VALUE)'
+TARGET = 'Median_SALE_VALUE'
+ 
+Feature_FIELD_MAP = {
+    'Median(SALE_VALUE)':'Median_SALE_VALUE',
+    'Year':'Year',
+    'DNR_ID_Site_Number':'DNR_ID_Site_Number',
+    'Mean(log_phosphorus)':'Mean_log_phosphorus',
+    'Std Dev(log_phosphorus)' : 'Std_Dev_log_phosphorus',
+    'Mean(Secchi_Depth_RESULT)':'Mean_Secchi_Depth_RESULT',
+    'Std Dev(Secchi_Depth_RESULT)':'Std_Dev_Secchi_Depth_RESULT',
+    'Number Properties':'Number_Properties',
+    'Mean(ACRES_POLY)':'Mean_ACRES_POLY',
+    'Std Dev(ACRES_POLY)':'Std_Dev_ACRES_POLY',
+    'N(Ag Preserve - Yes)':'N_Ag_Preserve_Yes',
+    'N(Basement - Yes)':'N_Basement_Yes',
+    'Median(EMV_TOTAL)':'MedianEMV_TOTAL',
+    'Interquartile Range(EMV_TOTAL)':'InterquartileRangeEMV_TOTAL',
+    'Median(FIN_SQ_FT)':'MedianFIN_SQ_FT',
+    'Interquartile Range(FIN_SQ_FT)':'InterquartileRangeFIN_SQ_FT',
+    'N(Green ACRE - Yes)':'NGreenACRE_Yes',
+    'N(Homestead - Partial)':'NHomestead_Partial',
+    'N(Homestead - Yes)':'NHomestead_Yes',
+    'N(Single Unit)':'NSingleUnit',
+    'N(Multiple Unit)':'NMultipleUnit',
+    'Median(TOTAL_TAX)':'MedianTOTAL_TAX',
+    'Interquartile Range(TOTAL_TAX)':'InterquartileRangeTOTAL_TAX',
+    'N(Sales that year)':'NSalesthatyear',
+    'N(Built that year)':'NBuiltthatyear',
+    'num.rec.readings':'numrecreadings',
+    'num.physical.readings':'numphysicalreadings',
+    'rec.avg':'recavg',
+    'physical.avg':'physicalavg',
+    'seasonal.grade':'seasonalgrade',
+    'MAJOR_WATERSHED':'MAJOR_WATERSHED'
 
 
+}
+COLUMNS_NECESSARY_READ =[k for k,v in Feature_FIELD_MAP.items()]
 # variables
-FEATURES = ['Year', 'Mean(log_phosphorus)',
-       'Std Dev(log_phosphorus)', 'Mean(Secchi_Depth_RESULT)',
-       'Std Dev(Secchi_Depth_RESULT)', 'rec_1', 'rec_2', 'rec_3', 'rec_4',
-       'rec_5',
-       'seasonal_5', 'physical_1', 'physical_2', 'physical_3', 'physical_4',
-       'physical_5', 'MAJOR_WATERSHED', 'longitude', 'latitude',
-       'num.rec.readings', 'num.physical.readings', 'rec.avg', 'physical.avg',
-       'seasonal.grade', 'Number Properties', 'Mean(ACRES_POLY)',
-       'Std Dev(ACRES_POLY)', 'N(Ag Preserve - Yes)', 'N(Basement - Yes)',
-       'Median(EMV_TOTAL)', 'Interquartile Range(EMV_TOTAL)',
-       'Median(FIN_SQ_FT)', 'Interquartile Range(FIN_SQ_FT)',
-       'N(Green ACRE - Yes)', 'N(Homestead - Partial)', 'N(Homestead - Yes)',
-       'N(Single Unit)', 'N(Multiple Unit)',
-       'Median(TOTAL_TAX)','Interquartile Range(SALE_VALUE)',
-       'Interquartile Range(TOTAL_TAX)', 'N(Sales that year)',
-       'N(Built that year)'
-            ]
+FEATURES = ['Mean_log_phosphorus', 'Std_Dev_log_phosphorus',
+       'Mean_Secchi_Depth_RESULT', 'Std_Dev_Secchi_Depth_RESULT',
+       'Number_Properties', 'Mean_ACRES_POLY', 'Std_Dev_ACRES_POLY',
+       'N_Ag_Preserve_Yes', 'N_Basement_Yes', 'MedianEMV_TOTAL',
+       'InterquartileRangeEMV_TOTAL', 'MedianFIN_SQ_FT',
+       'InterquartileRangeFIN_SQ_FT', 'NGreenACRE_Yes', 'NHomestead_Partial',
+       'NHomestead_Yes', 'NSingleUnit', 'NMultipleUnit', 'MedianTOTAL_TAX',
+       'InterquartileRangeTOTAL_TAX', 'NSalesthatyear', 'NBuiltthatyear',
+       'numrecreadings', 'numphysicalreadings', 'recavg', 'physicalavg',
+       'MAJOR_WATERSHED']
 
 # this variable is to calculate the temporal variable,
 # can be dropped afterwards
-DROP_FEATURES = ['seasonal.grade']
+DROP_FEATURES = []
 
-# numerical variables with NA in train set
+# categorical and numerical variables with NA in train set
 CATEGORICAL_VARS_WITH_NA= ["MAJOR_WATERSHED"]
 
-NUMERICAL_VARS_WITH_NA = ['Mean(log_phosphorus)',
- 'Std Dev(log_phosphorus)',
- 'Mean(Secchi_Depth_RESULT)',
- 'Std Dev(Secchi_Depth_RESULT)',
- 'rec.avg',
- 'physical.avg',
- 'Mean(ACRES_POLY)',
- 'Std Dev(ACRES_POLY)',
- 'Interquartile Range(SALE_VALUE)',
- 'Median(TOTAL_TAX)',
- 'Interquartile Range(TOTAL_TAX)'
-]
+NUMERICAL_VARS_WITH_NA = ['Mean_log_phosphorus',
+ 'Std_Dev_log_phosphorus',
+ 'Mean_Secchi_Depth_RESULT',
+ 'Std_Dev_Secchi_Depth_RESULT',
+ 'Number_Properties',
+ 'Mean_ACRES_POLY',
+ 'Std_Dev_ACRES_POLY','MedianEMV_TOTAL',
+ 'InterquartileRangeEMV_TOTAL',
+ 'MedianFIN_SQ_FT',
+ 'InterquartileRangeFIN_SQ_FT','MedianTOTAL_TAX',
+ 'InterquartileRangeTOTAL_TAX','recavg','physicalavg']
+
 CATEGORICAL_VARS = ["MAJOR_WATERSHED"]
 
 
