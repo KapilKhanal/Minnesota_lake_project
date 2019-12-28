@@ -21,7 +21,7 @@ import os
 sys.path.append((os.path.dirname(os.path.dirname(__file__))))
 print(sys.path)
 # What packages are required for this module to be executed?
-def list_reqs(fname='requirements.txt'):
+def list_reqs(fname='packages/lakeModel/requirements.txt'):
     with open(fname) as fd:
         return fd.read().splitlines()
 
