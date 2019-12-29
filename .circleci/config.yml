@@ -10,7 +10,7 @@ prepare_venv: &prepare_venv
     name: Create lake
     command: |
       python3 -m venv lake
-      source lake/bin/activate
+      . lake/bin/activate
       pip install --upgrade pip
 
 
