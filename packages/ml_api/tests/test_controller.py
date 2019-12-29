@@ -11,7 +11,7 @@ import json
 import math
 
 #print(sys.path)
-from api import __version__ as api_version
+from ml_api.api import __version__ as api_version
 
 
 def test_health_endpoint_returns_200(flask_test_client):
