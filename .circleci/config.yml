@@ -33,7 +33,7 @@ jobs:
             . lake/bin/activate
             pip install --upgrade pip
             pip install -r packages/ml_api/requirements.txt
-            py.test -vv packages/ml_api/tests
+            python -m pytest packages/ml_api/tests 
 
   train_and_upload_lakeModel:
     working_directory: ~/project
