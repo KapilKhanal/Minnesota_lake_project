@@ -1,13 +1,16 @@
+
+
+import sys,pathlib
+p = pathlib.Path(__file__).resolve().parent.parent.parent.parent
+
+sys.path.append(str(p))
 from lakeModel.config import config as model_config
 from lakeModel.processing.data_management import load_dataset
 from lakeModel import __version__ as _version
 
 import json
 import math
-import sys,pathlib
-#p = pathlib.Path(__file__).resolve().parent.parent.parent.parent
 
-#sys.path.append(str(p))
 #print(sys.path)
 from api import __version__ as api_version
 

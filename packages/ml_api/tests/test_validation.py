@@ -1,6 +1,9 @@
 import json
+import sys,pathlib
+p = pathlib.Path(__file__).resolve().parent.parent.parent.parent
 
-import lakeModel
+sys.path.append(str(p))
+
 from lakeModel.config import config
 from lakeModel.processing.data_management import load_dataset
 
