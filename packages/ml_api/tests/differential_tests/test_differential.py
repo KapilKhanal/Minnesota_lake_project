@@ -4,6 +4,10 @@ import pytest
 import sys
 import os
 import pandas as pd
+import pathlib
+
+p = pathlib.Path(__file__).resolve().parent.parent.parent.parent
+sys.path.append(str(p))
 sys.path.append((os.path.dirname(os.path.dirname(__file__))))
 from api import config as ml_config
 from lakeModel.config import config
