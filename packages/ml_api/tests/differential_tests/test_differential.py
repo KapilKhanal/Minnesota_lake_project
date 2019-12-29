@@ -3,14 +3,16 @@ import math
 import pytest
 import sys
 import os
-
+import pandas as pd
 sys.path.append((os.path.dirname(os.path.dirname(__file__))))
 from api import config as ml_config
 from lakeModel.config import config
 from lakeModel.predict import make_prediction
-from lakeModel.processing.data_management import (load_prediction_dataset,load_dataset)
+from lakeModel.processing.data_management import load_dataset
 
-
+def load_prediction_dataset(*, file_name: str)->pd.DataFrame:
+        _df = pd.read_csv(f'{ml_config.PACKAGE_ROOT}/{file_name}')
+        return _df
 @pytest.mark.differential
 def test_model_prediction_differential(
         *,
@@ -20,6 +22,8 @@ def test_model_prediction_differential(
     the current model with the previous model's results.
     """
     # Given
+    
+
     previous_model_df = load_prediction_dataset(file_name='test_data_predictions.csv')
     previous_model_predictions = previous_model_df.predictions.values
     test_data = load_dataset(file_name='test.csv')

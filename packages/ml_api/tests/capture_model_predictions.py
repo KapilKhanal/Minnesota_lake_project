@@ -9,7 +9,7 @@ import sys,pathlib
 p = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(p))
 import pandas as pd
-from api import config
+from lakeModel.config import config
 from lakeModel.predict import make_prediction
 from lakeModel.processing.data_management import load_dataset
 
