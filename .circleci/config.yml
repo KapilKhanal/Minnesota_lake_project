@@ -1,7 +1,6 @@
 
 checkout:
     post:
-        *****
         - pip install -U pip setuptools virtualenv
 
 version: 2
