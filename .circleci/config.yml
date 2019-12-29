@@ -28,7 +28,7 @@ jobs:
           name: Train model
           command: |
             . venv/bin/activate
-            PYTHONPATH=./packages/lakeModel python3 packages/lakeModel/lakeModel/train_pipeline.py
+            PYTHONPATH=./packages/lakeModel ./packages/ml_api python3 packages/lakeModel/lakeModel/train_pipeline.py
       - run:
           name: Run tests
           command: |
