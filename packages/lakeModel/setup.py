@@ -11,15 +11,11 @@ from setuptools import find_packages, setup
 # Package meta-data.
 NAME = 'lakeModel'
 DESCRIPTION = 'Train on minnesota lake water data'
-URL = 'your github project'
+URL = 'https://github.com/KapilKhanal/Minnesota_lake_project'
 EMAIL = 'kkhanal16@winona.edu'
 AUTHOR = 'Kapil Khanal'
 REQUIRES_PYTHON = '>=3.6.0'
-import sys
-import os
 
-sys.path.append((os.path.dirname(os.path.dirname(__file__))))
-print(sys.path)
 # What packages are required for this module to be executed?
 def list_reqs(fname='requirements.txt'):
     with open(fname) as fd:
