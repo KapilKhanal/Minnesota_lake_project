@@ -23,7 +23,7 @@ jobs:
           name: Install requirements
           command: |
             . venv/bin/activate
-            pip install -r packages/lakeModel/requirements.txt
+            pip install -e -r packages/lakeModel/requirements.txt
       - run:
           name: Train model
           command: |
