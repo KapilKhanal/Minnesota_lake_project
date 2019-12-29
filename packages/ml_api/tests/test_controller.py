@@ -1,7 +1,6 @@
 
-
 import sys,pathlib
-p = pathlib.Path(__file__).resolve().parent.parent.parent.parent
+p = pathlib.Path(__file__).resolve().parent.parent.parent
 
 sys.path.append(str(p))
 from lakeModel.config import config as model_config
