@@ -13,8 +13,6 @@ jobs:
             . lake/bin/activate
             pip install --upgrade pip
             pip install -r packages/lakeModel/requirements.txt
-            chmod +x ./scripts/fetch_kaggle_dataset.sh
-            ./scripts/fetch_kaggle_dataset.sh
             py.test -vv packages/lakeModel/tests
 
   test_ml_api:
