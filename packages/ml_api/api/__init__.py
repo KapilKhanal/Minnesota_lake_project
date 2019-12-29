@@ -1,4 +1,4 @@
-from ml_api.api.config import PACKAGE_ROOT
+from api.config import PACKAGE_ROOT
 import sys
 import os
 
