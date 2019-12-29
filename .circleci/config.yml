@@ -1,95 +1,64 @@
 version: 2
-
-defaults: &defaults
-  docker:
-    - image: circleci/python:3.7.2
-  working_directory: ~/project
-
-prepare_venv: &prepare_venv
-  run:
-    name: Create lake
-    command: |
-      python3 -m venv lake
-      . lake/bin/activate
-      pip install --upgrade pip
-
-
 jobs:
-  test_regression_model:
-    <<: *defaults
+  test_lakeModel:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.7.2
     steps:
       - checkout
-      - *prepare_venv
-      - run:
-          name: Install requirements
-          command: |
-            . lake/bin/activate
-            pip install -r packages/lakeModel/requirements.txt
-      - run:
-          name: Train model
-          command: |
-            . lake/bin/activate
-            PYTHONPATH=./packages/lakeModel python3 packages/lakeModel/lakeModel/train_pipeline.py
-      - run:
-          name: Run tests
-          command: |
-            . lake/bin/activate
-            py.test -vv packages/lakeModel/tests
-
-  test_ml_api:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - py-deps-{{ checksum "packages/ml_api/requirements.txt" }}
       - run:
           name: Runnning tests
           command: |
-            python3 -m venv lake
+            virtualenv lake
+            . lake/bin/activate
+            pip install --upgrade pip
+            pip install -r packages/lakeModel/requirements.txt
+            chmod +x ./scripts/fetch_kaggle_dataset.sh
+            ./scripts/fetch_kaggle_dataset.sh
+            py.test -vv packages/lakeModel/tests
+
+  test_ml_api:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.7.2
+    steps:
+      - checkout
+      - run:
+          name: Runnning tests
+          command: |
+            virtualenv lake
             . lake/bin/activate
             pip install --upgrade pip
             pip install -r packages/ml_api/requirements.txt
-            py.test -vv packages/ml_api/tests -m "not differential"
-      - save_cache:
-          key: py-deps-{{ checksum "packages/ml_api/requirements.txt" }}
-          paths:
-            - "/lake"
+            py.test -vv packages/ml_api/tests
 
-  train_and_upload_regression_model:
-    <<: *defaults
+  train_and_upload_lakeModel:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.7.2
     steps:
       - checkout
-      - *prepare_venv
       - run: 
-          name: Install requirements
+          name: Setup env
           command: |
+            virtualenv lake
             . lake/bin/activate
             pip install -r packages/lakeModel/requirements.txt
       - run: 
-          name: Train model
-          command: |
-            . lake/bin/activate
-            PYTHONPATH=./packages/lakeModel python3 packages/lakeModel/lakeModel/train_pipeline.py
-      - run: 
-          name: Publish model to Gemfury
+          name: Publish model
           command: |
             . lake/bin/activate
             chmod +x ./scripts/publish_model.sh
+            PYTHONPATH=./packages/lakeModel python3 packages/lakeModel/lakeModel/train_pipeline.py
             ./scripts/publish_model.sh ./packages/lakeModel/
 
-  
 workflows:
   version: 2
   test-all:
     jobs:
-      - test_regression_model
+      - test_lakeModel
       - test_ml_api
-      - train_and_upload_regression_model:
+      - train_and_upload_lakeModel
+      - test_ml_api:
           requires:
-            - test_regression_model
-            - test_ml_api
-          #filters:
-            #branches:
-              #only:
-                #- master
+            - train_and_upload_lakeModel
