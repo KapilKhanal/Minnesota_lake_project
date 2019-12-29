@@ -1,59 +1,82 @@
-
-checkout:
-    post:
-        - pip install -U pip setuptools virtualenv
-
 version: 2
+
+defaults: &defaults
+  docker:
+    - image: circleci/python:3.7.2
+  working_directory: ~/project
+
+prepare_venv: &prepare_venv
+  run:
+    name: Create venv
+    command: |
+      python3 -m venv venv
+      source venv/bin/activate
+      pip install --upgrade pip
+
 jobs:
   test_lakeModel:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.2
+    <<: *defaults
     steps:
       - checkout
+      - *prepare_venv
       - run:
-          name: Runnning tests
+          name: Install requirements
           command: |
-            virtualenv lake
-            . lake/bin/activate
-            pip install --upgrade pip
+            . venv/bin/activate
             pip install -r packages/lakeModel/requirements.txt
-            pip install pytest
+      - *fetch_data
+      - run:
+          name: Train model
+          command: |
+            . venv/bin/activate
+            PYTHONPATH=./packages/lakeModel python3 packages/lakeModel/lakeModel/train_pipeline.py
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
             py.test -vv packages/lakeModel/tests
 
   test_ml_api:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.2
+    <<: *defaults
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - py-deps-{{ checksum "packages/ml_api/requirements.txt" }}
       - run:
           name: Runnning tests
           command: |
-            virtualenv lake
-            . lake/bin/activate
+            virtualenv venv
+            . venv/bin/activate
             pip install --upgrade pip
             pip install -r packages/ml_api/requirements.txt
             py.test -vv packages/ml_api/tests
+      - save_cache:
+          key: py-deps-{{ checksum "packages/ml_api/requirements.txt" }}
+          paths:
+            - "/venv"
 
   train_and_upload_lakeModel:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.2
+    <<: *defaults
     steps:
       - checkout
+      - *prepare_venv
       - run: 
-          name: Setup env
+          name: Install requirements
           command: |
-            virtualenv lake
-            . lake/bin/activate
+            . venv/bin/activate
             pip install -r packages/lakeModel/requirements.txt
+      - *fetch_data
       - run: 
-          name: Publish model
+          name: Train model
           command: |
-            . lake/bin/activate
-            chmod +x ./scripts/publish_model.sh
+            . venv/bin/activate
             PYTHONPATH=./packages/lakeModel python3 packages/lakeModel/lakeModel/train_pipeline.py
+      - run: 
+          name: Publish model to Gemfury
+          command: |
+            . venv/bin/activate
+            chmod +x ./scripts/publish_model.sh
             ./scripts/publish_model.sh ./packages/lakeModel/
 
 workflows:
@@ -62,7 +85,11 @@ workflows:
     jobs:
       - test_lakeModel
       - test_ml_api
-      - train_and_upload_lakeModel
-      - test_ml_api:
+      - train_and_upload_lakeModel:
           requires:
-            - train_and_upload_lakeModel
+            - test_lakeModel
+            - test_ml_api
+          # filters:
+          #   branches:
+          #     only:
+          #       - master
