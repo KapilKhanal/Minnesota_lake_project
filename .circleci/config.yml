@@ -1,3 +1,9 @@
+
+checkout:
+    post:
+        *****
+        - pip install -U pip setuptools virtualenv
+
 version: 2
 jobs:
   test_lakeModel:
