@@ -1,8 +1,12 @@
 import math
 
 import pytest
+import sys
+import os
 
-from api import config
+sys.path.append((os.path.dirname(os.path.dirname(__file__))))
+from api import config as ml_config
+from lakeModel.config import config
 from lakeModel.predict import make_prediction
 from lakeModel.processing.data_management import (load_prediction_dataset,load_dataset)
 

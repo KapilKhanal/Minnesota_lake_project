@@ -8,6 +8,7 @@ sys.path.append((os.path.dirname(os.path.dirname(__file__))))
 from sklearn.pipeline import Pipeline
 
 from lakeModel.config import config
+from ml_api.api import config as api_config
 from lakeModel import __version__ as _version
 
 import logging
@@ -22,7 +23,7 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     return _data
 
 def load_prediction_dataset(*, file_name: str)->pd.DataFrame:
-    _df = pd.read_csv(f'{config.DATASET_DIR}/{file_name}')
+    _df = pd.read_csv(f'{api_config.PACKAGE_ROOT}/{file_name}')
     return _df
 
 def save_pipeline(*, pipeline_to_persist) -> None:
