@@ -2,6 +2,7 @@ import json
 #import sys,pathlib
 #p = pathlib.Path(__file__).resolve().parent.parent.parent.parent
 #sys.path.append(str(p))
+import lakeModel
 from lakeModel.config import config
 from lakeModel.processing.data_management import load_dataset
 
@@ -16,7 +17,7 @@ def test_prediction_endpoint_validation_200(flask_test_client):
     post_json = test_data.to_json(orient='records')
 
     # When
-    response = flask_test_client.post('/v1/predict/regression',
+    response = flask_test_client.post('/v1/predict/lakePrediction',
                                       json=json.loads(post_json))
 
     # Then
