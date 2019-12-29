@@ -1,5 +1,5 @@
 
-
+import lakeModel
 from lakeModel.config import config as model_config
 from lakeModel.processing.data_management import load_dataset
 from lakeModel import __version__ as _version
