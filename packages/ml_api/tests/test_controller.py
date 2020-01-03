@@ -7,7 +7,7 @@ from lakeModel import __version__ as _version
 import json
 import math
 
-print(sys.path)
+
 from api import __version__ as api_version
 
 
