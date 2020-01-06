@@ -16,5 +16,9 @@ CD/CI
 Test Intergration
 RESTapi
 
+This puts the model in a server to which another web dashboard posts test dataset for predictionss
 
-Most of the code is adapted from trainindata/deploymentofMachineLearning https://www.udemy.com/course/deployment-of-machine-learning-models/?couponCode=TIDWEBJUNE
+
+
+
+Most of the code is adapted from trainindata/deploymentofMachineLearning
