@@ -21,4 +21,4 @@ This puts the model in a server to which another web dashboard posts test datase
 
 
 
-Most of the code is adapted from trainindata/deploymentofMachineLearning
+
