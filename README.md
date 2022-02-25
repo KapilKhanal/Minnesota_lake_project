@@ -14,6 +14,8 @@ CD/CI
 Test Intergration
 RESTapi
 
+train.csv and test.csv from https://github.com/KapilKhanal/lake_project
+
 This puts the model in a server to which another web dashboard posts test dataset for predictions. The architecture of the machine learning deployment was inspired by the excellent course/tutorial by https://christophergs.com/
 
 
